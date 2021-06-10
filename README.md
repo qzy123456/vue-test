@@ -1,5 +1,4 @@
 # vue01
-
 > A Vue.js project
 
 ## Build Setup
