@@ -1,28 +1,15 @@
 <template>
   <div id="app">
-    <mynavbar> </mynavbar>
-    <img src="./assets/logo.png">
-    <router-view/>
+    <!-- 路由占位符 -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import mynavbar from './components/AppComponents/Navbar.vue'
 export default {
-  name: 'App',
-  components: {
-    mynavbar
-  }
+  name: 'app'
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 0;
-}
 </style>
