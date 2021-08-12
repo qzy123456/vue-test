@@ -4,9 +4,57 @@
     <el-header>
       <div>
         <img src="../assets/logo.png" alt />
-        <span>电商后台管理系统</span>
+        <span>后台管理系统</span>
+        <!-- 修改用户的对话框 -->
+        <el-dialog
+                title="修改用户信息"
+                :visible.sync="editDialogVisible"
+                width="50%"
+                @close="editDialogClosed"
+        >
+          <!-- 内容主体 -->
+          <el-form
+                  :model="editUserForm"
+                  ref="editUserFormRef"
+                  :rules="editUserFormRules"
+                  label-width="80px"
+          >
+            <el-form-item label="旧密码" prop="old_password">
+              <el-input v-model="editUserForm.old_password"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="editUserForm.password"></el-input>
+            </el-form-item>
+            <el-form-item label="重复密码" prop="new_password">
+              <el-input v-model="editUserForm.new_password"></el-input>
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editUser">确 定</el-button>
+      </span>
+        </el-dialog>
       </div>
-      <el-button type="info" @click="logout">退出</el-button>
+      <!--<el-button type="info" @click="logout">{{userName}} 退出</el-button>-->
+      <el-col :xs="12" :lg="12" :md="9" :sm="14" :xl="9" style="display: flex;justify-content: flex-end;">
+        <div class="fl-right right-box">
+          <el-dropdown>
+                      <span class="header-avatar" style="cursor: pointer;color: #999999;">
+                        <span style="margin-left: 5px">{{ userName }}</span>
+                        <i class="el-icon-arrow-down" />
+                      </span>
+            <el-dropdown-menu slot="dropdown" class="dropdown-group">
+              <el-dropdown-item>
+                          <span style="font-weight: 600;">
+                            当前角色：{{ userName }}
+                          </span>
+              </el-dropdown-item>
+              <el-dropdown-item icon="el-icon-s-custom" @click.native="toPerson">修改密码</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-table-lamp" @click.native="logout">登 出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </el-col>
     </el-header>
     <!-- 主体 -->
     <el-container>
@@ -43,11 +91,24 @@
       </el-main>
     </el-container>
   </el-container>
+
 </template>
 
 <script>
 export default {
+
   data () {
+    var repasswordValidator = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.editUserForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else if (value === this.editUserForm.old_password) {
+        callback(new Error('新密码不能和旧密码一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       // 左侧菜单数据
       menuList: [],
@@ -61,12 +122,42 @@ export default {
       // 默认不折叠
       isCollapse: false,
       // 被激活导航地址
-      activePath: ''
+      activePath: '',
+      userName:'',
+      // 修改用户
+      editDialogVisible: false,
+      editUserForm: {},
+      // 编辑用户表单验证
+      editUserFormRules: {
+        old_password: [
+          { required: true, message: '请输入旧密码', trigger: 'blur' },
+          {
+            min: 3,
+            max: 18,
+            message: '用户密码的长度在3～18',
+            trigger: 'blur'
+          }
+        ],
+        password: [
+          { required: true, message: '请输入新密码', trigger: 'blur' },
+          {
+            min: 3,
+            max: 18,
+            message: '用户密码的长度在3～18',
+            trigger: 'blur'
+          }
+        ],
+        new_password: [
+          { required: true, message: '请输入新密码', trigger: 'blur' },
+          { validator: repasswordValidator, trigger: 'blur' }
+        ]
+      },
     }
   },
   created () {
     this.getMenuList()
     this.activePath = window.sessionStorage.getItem('activePath')
+    this.userName = window.sessionStorage.getItem('userName')
   },
   methods: {
     logout () {
@@ -87,6 +178,35 @@ export default {
     // 保存连接的激活地址
     saveNavState (activePath) {
       window.sessionStorage.setItem('activePath', activePath)
+    },
+// 修改用户信息
+    editUser () {
+      // 提交请求前，表单预验证
+      this.$refs.editUserFormRef.validate(async valid => {
+        // 表单预校验失败
+        if (!valid) return
+        const { data: res } = await this.$http.post(
+                'user/updatePass',
+                {
+                  password: this.editUserForm.password,
+                  userName  :   this.userName,
+                  new_password: this.editUserForm.new_password
+                }
+        )
+        if (res.code !== 200) {
+          this.$message.error(res.msg)
+          return
+        }
+        // 隐藏添加用户对话框
+        this.editDialogVisible = false
+        this.$message.success('修改密码成功！')
+      })
+    },
+    editDialogClosed(){
+      this.$refs.editUserFormRef.resetFields()
+    },
+    toPerson(){
+      this.editDialogVisible = true
     }
   }
 }

@@ -14,7 +14,6 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-
 import axios from 'axios'
 // 配置请求根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/'
@@ -29,7 +28,6 @@ axios.interceptors.request.use(config => {
 })
 // 挂在到Vue实例，后面可通过this调用
 Vue.prototype.$http = axios
-
 Vue.config.productionTip = false
 // 组件全局注册 表格树
 Vue.component('tree-table', TreeTable)

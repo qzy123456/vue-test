@@ -4,7 +4,9 @@ import { Button, Form, FormItem, Input, Message, Container, Header,
   BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination,
   Dialog, MessageBox, Tag, Tree, Select, Option, Cascader, Alert, Tabs, TabPane,
   Step, Steps, Checkbox, CheckboxGroup, Upload,
-  Timeline, TimelineItem,Radio,RadioGroup } from 'element-ui'
+  Timeline, TimelineItem,Radio,RadioGroup,Dropdown,DropdownItem,DropdownMenu,
+  Progress
+} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -49,3 +51,7 @@ Vue.use(Timeline)
 Vue.use(TimelineItem)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(DropdownItem)
+Vue.use(DropdownMenu)
+Vue.use(Dropdown)
+Vue.use(Progress)

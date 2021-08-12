@@ -25,9 +25,13 @@
         border：边框-->
         <el-table-column type="index" label="#"></el-table-column>
         <el-table-column prop="userName" label="姓名"></el-table-column>
-        <el-table-column label="状态">
+        <el-table-column prop="role_name" label="角色"></el-table-column>
+        <el-table-column  label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.enabled" @change="userStateChanged(scope.row)"></el-switch>
+            <el-switch
+                    v-model="scope.row.enabled"
+                    @change="userStateChanged(scope.row)">
+            </el-switch>
           </template>
         </el-table-column>
         <el-table-column prop="create" label="创建时间"></el-table-column>
@@ -251,7 +255,7 @@ export default {
       }
       this.userlist = res.data
       this.totle = res.count
-      console.log(res)
+      console.log(this.userlist)
     },
     // 监听 pagesize改变的事件
     handleSizeChange (newSize) {
@@ -267,11 +271,12 @@ export default {
     },
     // 监听 switch开关 状态改变
     async userStateChanged (userInfo) {
-      this.userInfo.enabled = userInfo.enabled ? 1 : 0
+      this.userInfo.enabled = userInfo.enabled ? 1 :0
       this.userInfo.userId = userInfo.userId
-      const { data: res } = await this.$http.post('user/update', this.userInfo)
+      console.log( this.userInfo)
+      const { data: res } = await this.$http.post('user/updateStatus', this.userInfo)
       if (res.code !== 200) {
-        userInfo.mg_state = !userInfo.mg_state
+        userInfo.enabled = !userInfo.enabled
         return this.$message.error('更新用户状态失败')
       }
       this.$message.success('更新用户状态成功！')
