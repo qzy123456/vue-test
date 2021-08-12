@@ -16,7 +16,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import axios from 'axios'
 // 配置请求根路径
-axios.defaults.baseURL = 'http://127.0.0.1:8888/'
+axios.defaults.baseURL = 'http://127.0.0.1:8888'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 请求在到达服务器之前，先会调用use中的这个回调函数来添加请求头信息
 axios.interceptors.request.use(config => {
