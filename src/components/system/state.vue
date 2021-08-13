@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- 面包屑导航区 -->
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>系统设置</el-breadcrumb-item>
+      <el-breadcrumb-item>系统信息</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-row :gutter="15" class="system_state">
       <el-col :span="12">
         <el-card v-if="state.os" class="card_item">

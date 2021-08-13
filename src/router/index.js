@@ -12,6 +12,9 @@ import GoodsList from '../components/goods/List.vue'
 import Add from '../components/goods/Add.vue'
 import Order from '../components/order/Order.vue'
 import Server from '../components/system/state.vue'
+import Log from '../components/system/Log.vue'
+import axios from 'axios'
+import {MessageBox} from "element-ui";
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +34,7 @@ const routes = [
       { path: '/goods/add', component: Add },
       { path: '/orders', component: Order },
       { path: '/server', component: Server },
+      { path: '/log', component: Log },
     ] }
 
 ]
@@ -50,5 +54,20 @@ router.beforeEach((to, from, next) => {
   if (!tokenStr) return next('/login')
   next()
 })
-
+//与后端定义状态是-1是token类错误
+axios.interceptors.response.use(
+    response => {
+        console.log(response.data)
+        //返回token相关
+        if (response.data.status === -1) {
+            MessageBox.alert('token已过期,请重新登陆','token过期',{
+                confirmButtonText:"跳转到登陆页面",
+                callback:action=>{
+                    window.location.href = "/login"
+                }
+            })
+        }
+        return response;
+    }
+)
 export default router
