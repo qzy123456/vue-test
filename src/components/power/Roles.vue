@@ -180,7 +180,7 @@ export default {
   methods: {
     //获取全部角色，以及角色下所有用户的菜单
     async getRolesList () {
-      const { data: res } = await this.$http.post('role/all')
+      const { data: res } = await this.$http.post('/role/all')
       if (res.code !== 200) {
         return this.$message.error(res.msg)
       }
@@ -223,7 +223,7 @@ export default {
       this.defKeys = []
       this.roleId = role.role_id
       // 获取角色的所有权限
-      const { data: res } = await this.$http.post('menu/all')
+      const { data: res } = await this.$http.post('/menu/all')
       if (res.code !== 200) {
         return this.$message.error('获取权限数据失败！')
       }
@@ -259,7 +259,7 @@ export default {
     addRoles () {
       this.$refs.addRoleFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post('role/save', this.addRoleForm)
+        const { data: res } = await this.$http.post('/role/save', this.addRoleForm)
         if (res.code !== 200) {
           this.$message.error('添加角色失败！')
         }
@@ -283,7 +283,7 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-      const { data: res } = await this.$http.post('role/delete', {role_id:this.roleId})
+      const { data: res } = await this.$http.post('/role/delete', {role_id:this.roleId})
       if (res.code !== 200) return this.$message.error('删除角色失败！')
       this.$message.success('删除用户成功！')
       this.getRolesList()
@@ -299,7 +299,7 @@ export default {
         // 表单预校验失败
         if (!valid) return
         const { data: res } = await this.$http.post(
-          'role/update',
+          '/role/update',
           {
             role_name: this.editRoleForm.role_name,
             role_id: this.editRoleForm.role_id
@@ -324,7 +324,7 @@ export default {
       // join() 方法用于把数组中的所有元素放入一个字符串
       const idStr = keys.join(',')
       console.log(idStr)
-      const { data: res } = await this.$http.post('menu/giveMenu',
+      const { data: res } = await this.$http.post('/menu/giveMenu',
               { menu_id: idStr ,role_id :this.roleId})
       if (res.code !== 200) { return this.$message.error('分配权限失败！') }
       this.$message.success('分配权限成功!')

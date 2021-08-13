@@ -249,7 +249,7 @@ export default {
   },
   methods: {
     async getUserList () {
-      const { data: res } = await this.$http.post('user/allUser', this.queryInfo)
+      const { data: res } = await this.$http.post('/user/allUser', this.queryInfo)
       if (res.code !== 200) {
         return this.$message.error('获取用户列表失败！')
       }
@@ -274,7 +274,7 @@ export default {
       this.userInfo.enabled = userInfo.enabled ? 1 :0
       this.userInfo.userId = userInfo.userId
       console.log( this.userInfo)
-      const { data: res } = await this.$http.post('user/updateStatus', this.userInfo)
+      const { data: res } = await this.$http.post('/user/updateStatus', this.userInfo)
       if (res.code !== 200) {
         userInfo.enabled = !userInfo.enabled
         return this.$message.error('更新用户状态失败')
@@ -292,7 +292,7 @@ export default {
         // console.log(valid)
         // 表单预校验失败
         if (!valid) return
-        const { data: res } = await this.$http.post('user/saveUser', this.addUserForm)
+        const { data: res } = await this.$http.post('/user/saveUser', this.addUserForm)
         if (res.code !== 200) {
           this.$message.error('添加用户失败！')
         }
@@ -319,7 +319,7 @@ export default {
         // 表单预校验失败
         if (!valid) return
         const { data: res } = await this.$http.post(
-          'user/update',
+          '/user/update',
           {
             password: this.editUserForm.password,
             userId  :   this.editUserForm.userId
@@ -350,7 +350,7 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-      const { data: res } = await this.$http.post('user/deleteById',
+      const { data: res } = await this.$http.post('/user/deleteById',
               {"userId" :id })
       if (res.code !== 200) return this.$message.error('删除用户失败！')
       this.$message.success('删除用户成功！')
@@ -365,7 +365,7 @@ export default {
       this.userInfo.role_name = role.Role.role_name
       this.userInfo.user_id = role.userId
       // 展示对话框之前，获取所有角色列表
-      const { data: res } = await this.$http.post('role/all')
+      const { data: res } = await this.$http.post('/role/all')
       if (res.code !== 200) {
         return this.$message.error('获取角色列表失败！')
       }
@@ -377,7 +377,7 @@ export default {
       if (!this.selectRoleId) {
         return this.$message.error('请选择要分配的角色')
       }
-      const { data: res } = await this.$http.post('user/insertRole',{ role_id: this.selectRoleId,
+      const { data: res } = await this.$http.post('/user/insertRole',{ role_id: this.selectRoleId,
         user_id : this.userInfo.user_id
       })
       if (res.code !== 200) {

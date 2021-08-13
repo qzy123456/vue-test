@@ -217,7 +217,7 @@ export default {
       },
     //获取所有的路由
     async getRightsList () {
-      const { data: res } = await this.$http.post('menu/all')
+      const { data: res } = await this.$http.post('/menu/all')
       if (res.code!== 200) {
         return this.$message.error('获取权限列表失败！')
       }
@@ -261,7 +261,7 @@ export default {
         if (!valid) return
         console.log(this.editeFormData)
         const { data: res } = await this.$http.post(
-                'menu/update',
+                '/menu/update',
                 this.editeFormData
         )
         if (res.code !== 200) {
@@ -315,7 +315,7 @@ export default {
         this.$message.info('已取消删除')
       }
       const { data: res } = await this.$http.post(
-              'menu/delete',
+              '/menu/delete',
               {
                 menu_id:data.menu_id
               }

@@ -167,7 +167,7 @@ export default {
     },
     // 获取请求菜单
     async getMenuList () {
-      const { data: res } = await this.$http.post('user/getMenuById')
+      const { data: res } = await this.$http.post('/user/getMenuById')
       if (res.code !== 200) return this.$message.error(res.msg)
       this.menuList = res.data
     },
@@ -186,7 +186,7 @@ export default {
         // 表单预校验失败
         if (!valid) return
         const { data: res } = await this.$http.post(
-                'user/updatePass',
+                '/user/updatePass',
                 {
                   password: this.editUserForm.password,
                   userName  :   this.userName,

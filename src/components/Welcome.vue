@@ -123,7 +123,7 @@ return{
       }
     },
     async greet() {
-      const { data: res } = await this.$http.post('server/weather',{
+      const { data: res } = await this.$http.post('/server/weather',{
             city:this.input2
       })
       console.log(res)
