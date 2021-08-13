@@ -73,7 +73,7 @@
               <span>{{ item.menu_name}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/' + subItem.menu_url" v-for="subItem in item.children" :key="subItem.menu_id" @click="saveNavState('/' + subItem.menu_url)">
+            <el-menu-item :index="subItem.menu_url" v-for="subItem in item.children" :key="subItem.menu_id" @click="saveNavState(subItem.menu_url)">
               <!-- 导航开启路由模式：
                 将index值作为导航路由 -->
               <!-- 二级菜单的模板区域 -->

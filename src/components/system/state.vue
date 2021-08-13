@@ -159,7 +159,7 @@ export default {
     async reload() {
       const { data: res } = await this.$http.post('/server/server')
       if (res.code !== 200) {
-        this.$message.error('获取系统信息失败！')
+        this.$message.error(res.msg)
         return
       }
       this.state = res.data

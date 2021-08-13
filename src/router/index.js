@@ -36,7 +36,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+    mode :"history"//除去#号
 })
 
 // 挂载路由导航守卫,to表示将要访问的路径，from表示从哪里来，next是下一个要做的操作 next('/login')强制跳转login
