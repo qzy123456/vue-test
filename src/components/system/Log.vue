@@ -12,7 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <el-input placeholder="请输入内容" v-model="queryInfo.query_info" clearable @clear="getUserList">
-            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="getLogList"></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -57,10 +57,10 @@ export default {
     }
   },
   created () {
-    this.getUserList()
+    this.getLogList()
   },
   methods: {
-    async getUserList () {
+    async getLogList () {
       const { data: res } = await this.$http.post('/log/all', this.queryInfo)
       if (res.code !== 200) {
         return this.$message.error('获取请求日志列表失败！')
