@@ -74,6 +74,7 @@ export default {
         console.log(res)
         window.sessionStorage.setItem('token', res.data.token)
         window.sessionStorage.setItem('userName', res.data.userName)
+        window.sessionStorage.setItem('userId', res.data.userId)
         // 2、通过编程式导航跳转到后台主页, 路由地址为：/home
         this.$router.push('/home')
       })

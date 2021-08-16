@@ -123,6 +123,7 @@ export default {
       isCollapse: false,
       // 被激活导航地址
       activePath: '',
+      userId:'',
       userName:'',
       // 修改用户
       editDialogVisible: false,
@@ -158,6 +159,7 @@ export default {
     this.getMenuList()
     this.activePath = window.sessionStorage.getItem('activePath')
     this.userName = window.sessionStorage.getItem('userName')
+    this.userId = window.sessionStorage.getItem('userId')
   },
   methods: {
     logout () {
@@ -190,7 +192,8 @@ export default {
                 {
                   password: this.editUserForm.password,
                   userName  :   this.userName,
-                  new_password: this.editUserForm.new_password
+                  new_password: this.editUserForm.new_password,
+                  userId: this.userId
                 }
         )
         if (res.code !== 200) {
