@@ -11,7 +11,7 @@
       <!-- 搜索 添加 -->
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input placeholder="请输入内容" v-model="queryInfo.query_info" clearable @clear="getUserList">
+          <el-input placeholder="请输入内容" v-model="queryInfo.query_info" clearable @clear="getLogList">
             <el-button slot="append" icon="el-icon-search" @click="getLogList"></el-button>
           </el-input>
         </el-col>
@@ -21,8 +21,9 @@
         <!-- stripe: 斑马条纹
         border：边框-->
         <el-table-column width="60%" prop="Id" label="Id"></el-table-column>
+        <el-table-column width="60%" prop="User" label="管理员"></el-table-column>
         <el-table-column width="80%" prop="Ip" label="ip"></el-table-column>
-        <el-table-column width="120%" prop="Path" label="路径"></el-table-column>
+        <el-table-column width="130%" prop="Path" label="路径"></el-table-column>
         <el-table-column prop="Body" label="请求参数"></el-table-column>
         <el-table-column prop="Response" label="响应"></el-table-column>
       </el-table>
@@ -72,12 +73,12 @@ export default {
     // 监听 pagesize改变的事件
     handleSizeChange (newSize) {
       this.queryInfo.page_size = newSize
-      this.getUserList()
+      this.getLogList()
     },
     // 监听 页码值 改变事件
     handleCurrentChange (newSize) {
       this.queryInfo.page_num = newSize
-      this.getUserList()
+      this.getLogList()
     }
   }
 }
