@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import LineSimple from "../components/LineSimple.vue";
+import LineSimple from "./LineSimple.vue";
 import draggable from 'vuedraggable'
-import NavMenu from '../components/NavMenu.vue'
+import NavMenu from './NavMenu.vue'
 export default {
   data() {
       return {

@@ -1,4 +1,5 @@
 <template>
+  <!--展示图表页面-->
 <div class="linesimple">
   <draggable :options="{disabled:disabled,animation:150,ghostClass:'blue-background-class'}" @end="moveEnd" class="moveBox">
     <div v-for="(linechartItem,linechartIndex) in getParentInfo" :key="'lineCharts' + linechartIndex" class='chartmain' :class=linechartItem.chartClass>
@@ -16,7 +17,7 @@
 <script>
   import * as echarts from 'echarts';
 import draggable from 'vuedraggable'
-import { lineChart,pieChart,barChart } from '../utils/chartview.js'
+import { lineChart,pieChart,barChart } from '../../utils/chartview.js'
 import editChart from './editChart.vue';
 export default {
   data() {

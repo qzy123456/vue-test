@@ -40,8 +40,7 @@
 </div>
 </template>
 <script>
-import * as seleData from '../utils/dataInfor.js'
-import selectColor from './selectColor'
+import * as seleData from '../../utils/dataInfor.js'
 import {
   mapState
 } from 'vuex'
@@ -68,12 +67,12 @@ export default {
   watch: {
     dialogTableVisible(val) {
       if (!val) {
-        this.choseCWhichOne = ''
-        this.selectChartType = ''
-        this.imgArr = []
-        this.wChoseWhichOne = ''
-        this.HChoseWhichOne = ''
-        this.clickChart = -1
+        this.choseCWhichOne = '';
+        this.selectChartType = '';
+        this.imgArr = [];
+        this.wChoseWhichOne = '';
+        this.HChoseWhichOne = '';
+        this.clickChart = -1;
         this.chartTie = ''
       }
     }
@@ -159,7 +158,7 @@ export default {
     }
   },
   components: {
-      selectColor
+
     },
 };
 </script>
