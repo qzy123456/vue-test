@@ -13,6 +13,7 @@ import Add from '../components/goods/Add.vue'
 import Order from '../components/order/Order.vue'
 import Server from '../components/system/state.vue'
 import Log from '../components/system/Log.vue'
+import Home2 from '../components/Home2'
 import axios from 'axios'
 import {MessageBox} from "element-ui";
 Vue.use(VueRouter)
@@ -35,6 +36,7 @@ const routes = [
       { path: '/orders', component: Order },
       { path: '/server', component: Server },
       { path: '/log', component: Log },
+      { path: '/home2', component: Home2 },
     ] }
 
 ]
