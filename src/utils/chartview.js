@@ -20,16 +20,23 @@ line.prototype = {
         this.lineChartArr = params;
         for (var i = 0; i < params.length; i++) {
             options.push({
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid: {
                     top: '20%',
-                    bottom: '15%'
+                    bottom: '15%',
+                    containLabel: true
                 },
                 xAxis: {
                     type: "category",
                     data: params[i].xData,
+                    boundaryGap: false,
                     axisTick: {
                         show: false
                     }
@@ -50,24 +57,7 @@ line.prototype = {
                             var item = {
                                 data: params[i].seriesData[j].data,
                                 type: "line",
-                                itemStyle: {
-                                    color: params[i].chartColor[0]
-                                },
-                                areaStyle: {
-                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                            offset: 0,
-                                            color: params[i].chartColor[0]
-                                        },
-                                        {
-                                            offset: 0.4,
-                                            color: params[i].chartColor[1]
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "#fff"
-                                        }
-                                    ])
-                                },
+                                areaStyle: {},
                                 symbol: null,
                                 symbolSize: 0
                             };
@@ -77,9 +67,6 @@ line.prototype = {
                             var item = {
                                 data: params[i].seriesData[j].data,
                                 type: "line",
-                                itemStyle: {
-                                    color: params[i].seriesData[j].color
-                                },
                                 symbol: null,
                                 symbolSize: 0
                             };
@@ -147,19 +134,17 @@ pie.prototype = {
                         var item = {
                             type: "pie",
                             radius: ["50%", "70%"],
-                            center: ["25%", "60%"],
+                            center: ["50%", "50%"],
                             avoidLabelOverlap: false,
                             label: {
-                                normal: {
-                                    show: false,
-                                    position: "center"
-                                },
-                                emphasis: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
                                     show: true,
-                                    textStyle: {
-                                        fontSize: "18",
-                                        fontWeight: "bold"
-                                    }
+                                    fontSize: '18',
+                                    fontWeight: 'bold'
                                 }
                             },
                             labelLine: {
@@ -167,12 +152,7 @@ pie.prototype = {
                                     show: false
                                 }
                             },
-                            data: params[i].seriesData,
-                            itemStyle: {
-                                color: function(param) {
-                                    return circlePieColor[param.dataIndex]
-                                }
-                            }
+                            data: params[i].seriesData
                         };
                         series.push(item);
                     }
@@ -181,7 +161,7 @@ pie.prototype = {
                         var item = {
                             type: "pie",
                             radius: ["10%", "60%"],
-                            center: ["30%", "50%"],
+                            center: ["50%", "50%"],
                             roseType: "radius",
                             label: {
                                 normal: {
@@ -199,12 +179,7 @@ pie.prototype = {
                                     show: true
                                 }
                             },
-                            data: params[i].seriesData,
-                            itemStyle: {
-                                color: function(param) {
-                                    return areaPieColor[param.dataIndex]
-                                }
-                            }
+                            data: params[i].seriesData
                         };
                         series.push(item);
                     }
@@ -253,6 +228,18 @@ bar.prototype = {
         for (var i = 0; i < params.length; i++) {
             if (params[i].chartDetailType === "rowBar") {
                 options.push({
+                    toolbox: {
+                        feature: {
+                            dataView: { show: true, readOnly: false },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
                     xAxis: {
                         axisTick: {
                             show: false
@@ -298,19 +285,29 @@ bar.prototype = {
                         }
                     },
                     series: function() {
-                        var rowBarColor = params[i].chartColor
                         var series = [];
                         for (var j = 0; j < params[i].seriesData.length; j++) {
                             var item = {
                                 type: 'bar',
                                 tooltip: { show: false },
+                                itemStyle: {
+                                    barBorderRadius: [0, 20, 20, 0], // 圆角（左上、右上、右下、左下）
+
+                                    color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                                        offset: 0,
+                                        color: '#51C5FD'
+                                    }, {
+                                        offset: 1,
+                                        color: '#005BB1'
+                                    }], false), // 渐变
+                                },
                                 barWidth: 16,
                                 data: params[i].seriesData[j].data,
-                                itemStyle: {
+                                label: {
                                     normal: {
-                                        color: (params) => {
-                                            return rowBarColor[params.dataIndex]
-                                        }
+                                        show: true,
+                                        position: 'insideRight',
+                                        formatter: '{c}'
                                     }
                                 }
                             };
@@ -322,6 +319,15 @@ bar.prototype = {
             }
             if (params[i].chartDetailType === "columnBar") {
                 options.push({
+                    toolbox: {
+                        feature: {
+                            dataView: { show: true, readOnly: false },
+                            magicType: { show: true, type: ['line', 'bar'] },
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable : true,
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -330,85 +336,36 @@ bar.prototype = {
                     },
                     xAxis: {
                         data: params[i].xData,
-                        axisLabel: {
-                            textStyle: {
-                                color: '#AAAAAA'
-                            }
+                        splitLine:{
+                            show:false,
                         },
-                        axisTick: {
-                            show: false
-                        },
-                        axisLine: {
-                            show: false
-                        },
-                        z: 10
                     },
                     grid: {
                         left: '15%',
                         top: '20%',
-                        bottom: '15%'
+                        bottom: '15%',
+                        containLabel: true
                     },
                     yAxis: {
-                        axisLine: {
-                            show: false
+                        splitLine:{
+                            show:false,
                         },
-                        axisTick: {
-                            show: false
-                        },
-                        axisLabel: {
-                            textStyle: {
-                                color: '#AAAAAA'
-                            }
-                        }
                     },
-                    dataZoom: [{
-                        type: 'inside'
-                    }],
                     series: function() {
                         var series = []
                         for (var j = 0; j < params[i].seriesData.length; j++) {
-                            this.dataShadow = []
-                            this.yMax = Math.max.apply(null, params[i].seriesData[j].data)
-                            var countNum = countNumber(this.yMax)
-                            for (var m = 0; m < params[i].seriesData[j].data.length; m++) {
-                                this.dataShadow.push(countNum);
-                            }
-                            var item = {
+                            series.push({
                                 type: 'bar',
-                                itemStyle: {
-                                    normal: { color: params[i].chartColor[0] }
+                                stack: 'Ad',
+                                emphasis: {
+                                    focus: 'series'
                                 },
-                                barGap: '-100%',
-                                barCategoryGap: '40%',
-                                data: this.dataShadow,
+                                data: params[i].seriesData[j].data,
+                                itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
                                 animation: false
-                            }
-                            var item1 = {
-                                type: 'bar',
-                                itemStyle: {
-                                    normal: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1, [
-                                                { offset: 0, color: params[i].chartColor[1] },
-                                                { offset: 0.5, color: params[i].chartColor[2] },
-                                                { offset: 1, color: params[i].chartColor[3] }
-                                            ]
-                                        )
-                                    },
-                                    emphasis: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1, [
-                                                { offset: 0, color: params[i].chartColor[3] },
-                                                { offset: 0.7, color: params[i].chartColor[2] },
-                                                { offset: 1, color: params[i].chartColor[1] }
-                                            ]
-                                        )
-                                    }
-                                },
-                                data: params[i].seriesData[j].data
-                            }
-                            series.push(item, item1)
+                            })
                         }
+                         console.log(series)
                         return series;
                     }.bind(this)()
                 })

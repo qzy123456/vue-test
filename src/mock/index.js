@@ -49,7 +49,7 @@ var getFirstChartInfo = [{
         }]
     },
     {
-        chartClass: "h15 w24 chartMain4",
+        chartClass: "h15 w32 chartMain4",
         text: 4,
         chartDetailType: "circlePie",
         chartTit: "产品投资者人数",
@@ -76,7 +76,7 @@ var getFirstChartInfo = [{
         ]
     },
     {
-        chartClass: "h15 w24 chartMain5",
+        chartClass: "h15 w32 chartMain5",
         text: 5,
         chartDetailType: "areaPie",
         chartTit: "产品投资者人数",
@@ -130,9 +130,43 @@ var getFirstChartInfo = [{
         chartMainClass: ".chartMain7",
         xData: ["1年", "1-2年", "2年以上"],
         seriesData: [{
-            data: [249, 301, 162]
-        }]
-    }
+            data: [40, 22, 18, 35, 42, 40],
+            },
+            {
+                data: [5, 20, 36, 10, 10, 20],
+            },
+            {
+                data: [5, 20, 36, 10, 10, 20],
+            }
+            ]
+    },
+    {
+        chartClass: "h15 w32 chartMain8",
+        text: 8,
+        chartDetailType: "circlePie",
+        chartTit: "产品投资者人数",
+        chartType: "pie",
+        chartColor: ["#67A8FF", "#D0F6FF", "#FFE059", "#FB764A"],
+        chartMainClass: ".chartMain8",
+        xData: ["直接访问", "邮件营销", "联盟广告", "视频广告"],
+        seriesData: [{
+            value: 335,
+            name: "直接访问"
+        },
+            {
+                value: 310,
+                name: "邮件营销"
+            },
+            {
+                value: 234,
+                name: "联盟广告"
+            },
+            {
+                value: 135,
+                name: "视频广告"
+            }
+        ]
+    },
 ];
 
 Mock.mock("/data/firstchart", "get", getFirstChartInfo);

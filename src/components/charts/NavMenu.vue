@@ -18,6 +18,9 @@
       <span class="describe">图表名称:</span>
       <el-input v-model="chartTie" placeholder="请输入图表名称" class="selectInfo pintcharname"></el-input>
     </div>
+    <div class="chartcolo">
+      <selectColor :chartType='choseCWhichOne' :definiteChartType='selectChartType' v-on:changeColor='changeColo'></selectColor>
+    </div>
     <div class="chartChoseHW">
       <span class="describe">宽:</span>
       <el-select v-model="wChoseWhichOne" placeholder="请选择宽度" class="selectInfo">
@@ -41,6 +44,7 @@
 </template>
 <script>
 import * as seleData from '../../utils/dataInfor.js'
+import selectColor from './selectColor'
 import {
   mapState
 } from 'vuex'
@@ -102,6 +106,10 @@ export default {
       this.selectChartType = params.type
       this.clickChart = index
     },
+    //颜色
+    changeColo(data){
+      this.seleColor = data
+    },
     //提交存储，并拉数据
     async getChartInfo() {
       var seriesData = [] ,doubleArr =[]
@@ -158,7 +166,7 @@ export default {
     }
   },
   components: {
-
+    selectColor
     },
 };
 </script>
